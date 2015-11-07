@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <Style id="f38317f686">
+      <LineStyle>
+        <color>a67d7d7d</color>
+        <width>5</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>0000ff00</color>
+        <colorMode>normal</colorMode>
+        <fill>1</fill>
+      </PolyStyle>
+    </Style>
+    <Style id="722a404f03">
+      <LineStyle>
+        <color>a60000ff</color>
+        <width>5</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>a600ff00</color>
+        <colorMode>normal</colorMode>
+        <fill>1</fill>
+      </PolyStyle>
+    </Style>
+    <Style id="4fffd2edfd">
+      <LineStyle>
+        <color>a67d7d7d</color>
+        <width>5</width>
+      </LineStyle>
+    </Style>
+    <Style id="cf1e40d79d">
+      <LineStyle>
+        <color>a67d7d7d</color>
+        <width>5</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>a6737373</color>
+        <colorMode>normal</colorMode>
+        <fill>1</fill>
+      </PolyStyle>
+    </Style>
+    <Style id="ef523e60c0">
+      <LineStyle>
+        <color>007d7d7d</color>
+        <width>0</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>1a0eff00</color>
+        <colorMode>normal</colorMode>
+        <fill>1</fill>
+      </PolyStyle>
+    </Style>
+    <Style id="6122332530">
+      <IconStyle>
+        <scale>0.96</scale>
+        <Icon>
+          <href>https://787274de68dbc5bf84f1-6f7397d65ef7b0edf83ad5f3c18393bb.ssl.cf1.rackcdn.com/places_hd/places_-_high_detail_photo_spot_(camera).png</href>
+        </Icon>
+        <hotSpot x="0.5" xunits="fraction" y="0.5" yunits="fraction" />
+      </IconStyle>
+    </Style>
+    <Folder id="4b62684480">
+      <name>Group</name>
+      <Placemark id="2a85d70ee5">
+        <styleUrl>#f38317f686</styleUrl>
+        <Polygon>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>8.77519611861568,45.8153249010182
+8.77528194930416,45.8161923089184</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark id="f5a662bf91">
+        <styleUrl>#722a404f03</styleUrl>
+        <Polygon>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>8.77403740432125,45.8160726672527
+8.77403740432125,45.8160726672527</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark id="c776d50168">
+        <styleUrl>#4fffd2edfd</styleUrl>
+        <LineString>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>8.77543215300899,45.8162521296554
+8.75603441741329,45.8197664851326
+8.75509027984005,45.8197664851336
+8.75455383803707,45.819272993282
+8.7522364094482,45.813470397428
+8.7522364094482,45.8129170255231
+8.75281576659542,45.8123038232053
+8.76724873330455,45.8098303806857</coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark id="37d362a799">
+        <styleUrl>#cf1e40d79d</styleUrl>
+        <Polygon>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>8.77290014769893,45.8092096658509
+8.76737747933727,45.8099967759566
+8.76725946214061,45.8096527672075
+8.77279554154735,45.8088301289748</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark id="cb09dbcc5b">
+        <styleUrl>#ef523e60c0</styleUrl>
+        <Polygon>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>8.77225909974437,45.8080299146731
+8.7715080812202,45.8105576552306
+8.77525244500499,45.8099219916267</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark id="aec6077765">
+        <styleUrl>#6122332530</styleUrl>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>8.77231274392467,45.8080149572869</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
