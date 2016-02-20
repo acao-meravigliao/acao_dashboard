@@ -4,7 +4,5 @@ Rails.application.routes.draw do
   get 'radar' => 'radar#main'
   get 'meteo' => 'meteo#main'
 
-#  get 'services' => 'extgui/main#index'
-
-  root :to => redirect('/tracking/radar')
+  root :to => redirect('/dashboard')
 end

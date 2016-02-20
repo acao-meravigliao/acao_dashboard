@@ -64,7 +64,7 @@ task :deploy => :environment do
     end
 
     to :launch do
-      queue 'touch tmp/restart.txt'
+      queue! '/usr/local/bin/pumactl -S log/puma-production.state restart ; true'
     end
   end
 
