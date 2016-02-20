@@ -67,7 +67,7 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.extgui.hel_host = '[::1]:81'
+  config.extgui.hel_host = 'http://[::1]:3000'
   config.extgui.compiled = true
   config.extgui.compiled_stage1 = 'acao_dashboard-stage1.js'
   config.extgui.compiled_stage2 = 'acao_dashboard-stage2.js'

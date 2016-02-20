@@ -3,12 +3,17 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.2.0'
 gem 'responders'
 gem 'rails-observers'
+gem 'sprockets-rails', '~> 2.3.3'
 
 group :assets do
   gem 'sass-rails', '~> 5.0'
   gem 'uglifier', '>= 1.3.0'
   gem 'coffee-rails', '~> 4.1.0'
   gem 'therubyracer'
+end
+
+source 'https://gems.sevio.it' do
+  gem 'am-http'
 end
 
 gem 'jquery-rails'
@@ -29,8 +34,6 @@ gem 'puma'
 gem 'pry'
 gem 'pry-rails'
 gem 'awesome_print'
-
-gem 'curb', '>= 0.7.17'
 
 gem 'json_exceptions', :path => '../../yggdra/plugins/json_exceptions'
 

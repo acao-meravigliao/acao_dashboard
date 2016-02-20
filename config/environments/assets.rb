@@ -49,5 +49,5 @@ Rails.application.configure do
   config.extgui.faye_interface_uri = lambda { "#{request.protocol}#{request.host}:8000/faye" }
 
   config.extgui.ext_core_js = 'ext/ext-dev.js'
-  config.extgui.hel_host = '127.0.0.1:3332'
+  config.extgui.hel_host = 'http://[::1]:3330'
 end

@@ -5,5 +5,5 @@ task :extgui_assets do
   sh 'phantomjs ../../yggdra/tools/extgui_assets.js' +
        ' app/assets/js/acao_dashboard-stage1-files.js' +
        ' app/assets/js/acao_dashboard-stage2-files.js' +
-       ' http://localhost:3330/dashboard'
+       ' http://localhost:3331/dashboard'
 end
