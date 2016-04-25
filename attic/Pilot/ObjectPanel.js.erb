@@ -1,0 +1,34 @@
+/*
+ * Copyright (C) 2016-2016, Daniele Orlandi
+ *
+ * Author:: Daniele Orlandi <daniele@orlandi.com>
+ *
+ * License:: You can redistribute it and/or modify it under the terms of the LICENSE file.
+ *
+ */
+
+Ext.define('Extgui.Acao.Pilot.ObjectPanel', {
+  extend: 'Extgui.object.panel.Base',
+  requires: [
+    'Extgui.Acao.Plugin',
+    'Extgui.Acao.Pilot.Form',
+    'Extgui.Core.Person',
+  ],
+
+  title: 'Pilot...',
+  model: 'Ygg.Acao.Pilot',
+//  imageSrc: '<%= image_path 'email/pilot_64x64.png' %>',
+  tabTitleTpl: '{registration}',
+  panelTitleTpl: '<div class="name">Pilot</div><div class="value">{person.first_name person.last_name}</div>',
+  modifyButton: false,
+  destroyButton: false,
+  logPanel: false,
+  notificationsPanel: false,
+
+  form: 'acao_pilot_form',
+
+  nav: [
+  ],
+
+  reports: [],
+});
