@@ -25,5 +25,6 @@ Rails.application.config.assets.precompile += [
   'ext/resources/ext-theme-redtune/ext-theme-redtune-all.css',
   'radar.js',
   'meteo.js',
+  'metar.js',
 ]
 

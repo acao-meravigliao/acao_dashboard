@@ -47,4 +47,5 @@ gem 'fullgui', :path => '../../yggdra/plugins/fullgui'
 #
 gem 'core_extgui', :path => '../../yggdra/plugins/core_extgui'
 gem 'shop_extgui', :path => '../../yggdra/plugins/shop_extgui'
-
+gem 'acao_extgui', :path => '../../acao_plugins/acao_extgui'
+#gem 'trk_extgui', :path => '../../acao_plugins/trk_extgui'

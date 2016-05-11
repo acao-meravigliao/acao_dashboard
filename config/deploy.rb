@@ -12,7 +12,7 @@ require 'mina/simple'
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :user, 'yggdra'
-set :domain, 'localhost'
+set :domain, 'lino.acao.it'
 set :deploy_to, '/opt/acao_dashboard/frontend'
 
 set :shared_paths, [ 'log', ]

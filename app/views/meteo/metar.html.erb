@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ACAO Meteo Dashboard</title>
+    <meta name="description" content="ACAO Meteo Dashboard" />
+    <meta name="keywords" content="" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <%= favicon_link_tag Rails.application.config.extgui.favicon %>
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      div.data span { font-size: 10em; font-weight: bold }
+    </style>
+
+  </head>
+  <body>
+    <div class="data">
+
+      <div>
+        <span id="wind_dir"></span>
+        <span id="wind_speed"></span>
+      </div>
+        <div>Gust: <span id="wind_2m_gst"></span></span>
+      </div>
+    </div>
+
+    <%= javascript_include_tag @faye_source_uri if @faye_source_uri %>
+
+    <script type="text/javascript">
+      var app = {
+        faye_interface_uri: '<%= @faye_interface_uri %>',
+      };
+    </script>
+
+    <%= javascript_include_tag 'metar.js' %>
+  </body>
+</html>
