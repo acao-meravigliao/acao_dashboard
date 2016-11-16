@@ -24,15 +24,12 @@ Rails.application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  # Asset digests allow you to set far-future HTTP expiration dates on all assets,
-  # yet still be able to expire them through the digest params.
-  config.assets.digest = true
-
   # Adds additional error checking when serving assets at runtime.
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
-  config.assets.raise_runtime_errors = true
   config.assets.raise_runtime_errors = false
+  config.assets.raise_production_errors = false
+  config.assets.check_precompiled_asset = false
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
@@ -43,13 +40,11 @@ Rails.application.configure do
 
   config.extgui.compile_trees << 'AcaoDashboard'
 
-  config.extgui.faye_source_uri = lambda { "#{request.protocol}#{request.host}:8000/faye/faye.js" }
-  config.extgui.faye_interface_uri = lambda { "#{request.protocol}#{request.host}:8000/faye" }
-
   config.extgui.ext_core_js = 'ext/ext-dev.js'
   config.extgui.hel_host = 'http://[::1]:3330'
+  config.extgui.ws_uri = lambda { "ws://#{request.host}:3330/ws" }
 
-  require ::File.expand_path('../../../lib/proxy',  __FILE__)
+  require_relative '../../lib/proxy'
   config.middleware.use Rack::Proxy do |req|
     if req.path =~ %r{^/ygg/(.*)}
       URI.parse("#{Rails.application.config.extgui.hel_host}/ygg/#{$1}?#{req.query_string}")

@@ -71,6 +71,5 @@ Rails.application.configure do
   config.extgui.compiled = true
   config.extgui.compiled_stage1 = 'acao_dashboard-stage1.js'
   config.extgui.compiled_stage2 = 'acao_dashboard-stage2.js'
-  config.extgui.faye_source_uri = '/faye/faye.js'
-  config.extgui.faye_interface_uri = '/faye'
+  config.extgui.ws_uri = lambda { "wss://#{request.host}/ws" }
 end

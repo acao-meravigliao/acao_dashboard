@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2014, Daniele Orlandi
+ * Copyright (C) 2014-2016, Daniele Orlandi
  *
  * Author:: Daniele Orlandi <daniele@orlandi.com>
  *
@@ -99,11 +99,7 @@ Ext.define('AcaoDashboard.Radar', {
     me.traffics = {};
     me.stations = {};
 
-    Extgui.app.faye.subscribe('/glideradar/processed/**', function(message) {
-      me.onMessage(message);
-    }, null, function() {
-      alert('Error subscribing to faye events');
-    });
+    Extgui.app.ws.subscribe('ygg.glideradar.processed_traffic', {}, me.onMessage, me);
 
     me.periodicTask = Ext.util.TaskManager.start({
       interval: 2000,
@@ -169,8 +165,8 @@ console.log("A", tra);
 
     console.log("MSG=", message);
 
-    if (message.type != 'TRAFFICS_UPDATE') {
-      var newText = me.logarea.getValue() + Ext.Date.format(new Date(), 'H:m:s') + ' ' + (message.payload.text || message.type) + "\n";
+    if (message.headers.type != 'TRAFFICS_UPDATE') {
+      var newText = me.logarea.getValue() + Ext.Date.format(new Date(), 'H:m:s') + ' ' + (message.payload.text || message.headers.type) + "\n";
       var hasToScroll = me.logarea.inputEl.dom.scrollTop + me.logarea.inputEl.dom.clientHeight == me.logarea.inputEl.dom.scrollHeight;
 
       me.logarea.setValue(newText);
@@ -181,7 +177,7 @@ console.log("A", tra);
       console.log("OMSG=", message);
     }
 
-    switch(message.type) {
+    switch(message.headers.type) {
     case 'TRAFFICS_UPDATE':
       me.onTrafficsUpdate(message.payload);
     break;

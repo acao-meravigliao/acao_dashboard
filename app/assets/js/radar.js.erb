@@ -1,4 +1,10 @@
 
+
+//= require ext/ext.js
+//= require ext_core_patches.js
+Ext.Loader.setConfig({ enabled: false, });
+
+
 //= require markerwithlabel
 //= require jquery
 
@@ -319,6 +325,9 @@ var radar = {
     );
   },
 };
+
+
+
 
 var faye = new Faye.Client(app.faye_interface_uri);
 

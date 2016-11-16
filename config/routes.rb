@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
   get 'dashboard' => 'acao/dashboard/main#index'
 
-  get 'radar' => 'radar#main'
-  get 'meteo' => 'meteo#main'
-  get 'meteo/metar' => 'meteo#metar'
-
-  root :to => redirect('/dashboard')
+  root :to => 'acao/dashboard/main#index'
 end

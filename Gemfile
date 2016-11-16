@@ -1,9 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.0'
-gem 'responders'
-gem 'rails-observers'
-gem 'sprockets-rails', '~> 2.3.3'
+gem 'rails', '~> 5.0.0'
+gem 'jquery-rails'
+gem 'sprockets-rails', '~> 3.1.1'
+
+gem 'puma'
+
+gem 'pry'
+gem 'pry-rails'
+gem 'awesome_print'
 
 group :assets do
   gem 'sass-rails', '~> 5.0'
@@ -15,25 +20,6 @@ end
 source 'https://gems.sevio.it' do
   gem 'am-http'
 end
-
-gem 'jquery-rails'
-
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-end
-
-gem 'puma'
-
-gem 'pry'
-gem 'pry-rails'
-gem 'awesome_print'
 
 gem 'json_exceptions', :path => '../../yggdra/plugins/json_exceptions'
 
@@ -49,3 +35,4 @@ gem 'core_extgui', :path => '../../yggdra/plugins/core_extgui'
 gem 'shop_extgui', :path => '../../yggdra/plugins/shop_extgui'
 gem 'acao_extgui', :path => '../../acao_plugins/acao_extgui'
 #gem 'trk_extgui', :path => '../../acao_plugins/trk_extgui'
+gem 'i18n_extgui', :path => '../../yggdra/plugins/i18n_extgui'
