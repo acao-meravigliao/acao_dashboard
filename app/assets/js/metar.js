@@ -1,15 +1,36 @@
+/*
+ * Copyright (C) 2014-2017, Daniele Orlandi
+ *
+ * Author:: Daniele Orlandi <daniele@orlandi.com>
+ *
+ * License:: You can redistribute it and/or modify it under the terms of the LICENSE file.
+ *
+ */
+
+
 //= require jquery
 //= require jquery.sprintf
+//= require ext/ext
+//= require Extgui/WebSocket
 
-var wind = {
-  initialize: function() {
+
+Ext.define('Extgui.Ygg.Acao.Metar', {
+
+  constructor: function(args) {
     var me = this;
 
-    faye.subscribe('/meteo/updates/*', function(message) {
-      me.onMessage(message);
-    }, null, function() {
-      alert('Error subscribing to meteo data!');
-    });
+    me.ws = args.ws;
+
+    if (me.ws.state != 'READY') {
+      var sub = me.ws.on({
+        destroyable: true,
+        online: function(welcomeMsg) {
+          me.onOnline();
+          sub.destroy();
+        },
+      });
+    } else
+      me.onOnline();
 
     me.meteo = {};
     me.meteo_upd = {};
@@ -18,12 +39,19 @@ var wind = {
 
   },
 
+  onOnline: function() {
+    var me = this;
+
+    me.ws.subscribe('ygg.meteo.updates', {}, me.onMessage, me);
+  },
+
+
   onMessage: function(message) {
     var me = this;
 
 //console.log("MSG=", message);
 
-    switch(message.type) {
+    switch(message.headers.type) {
     case 'WX_UPDATE':
       var u = {};
 
@@ -77,10 +105,11 @@ var wind = {
     }, 15000);
 
   },
-};
+});
 
-var faye = new Faye.Client(app.faye_interface_uri);
+var ws = new Extgui.WebSocket(app.ws_uri);
+ws.connect();
 
 $( document ).ready(function() {
-  wind.initialize();
+  var meteo = new Extgui.Ygg.Acao.Metar({ ws: ws });
 });

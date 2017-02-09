@@ -10,12 +10,12 @@
 Ext.define('AcaoDashboard.Application', {
   extend: 'Extgui.app.Base',
   requires: [
-    'AcaoDashboard.LoginDialog',
+    'Extgui.fullgui.LoginDialog',
   ],
 
   name: 'AcaoDashboardApp',
   dashboardCard: 'AcaoDashboard.DashboardCard',
   mainControllerClass: 'AcaoDashboard.MainController',
-  loginDialogClass: 'AcaoDashboard.LoginDialog',
+  loginDialogClass: 'Extgui.fullgui.LoginDialog',
   requiredCapability: 'simple_interface',
 });

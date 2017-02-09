@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  get 'dashboard' => 'acao/dashboard/main#index'
+  root :to => 'ygg/acao/dashboard/main#index'
 
-  root :to => 'acao/dashboard/main#index'
+  scope module: 'ygg/acao' do
+    get 'dashboard' => 'dashboard/main#index'
+
+    get 'radar' => 'radar#main'
+    get 'radar/embed' => 'radar#embed'
+    get 'meteo' => 'meteo#main'
+    get 'metar' => 'meteo#metar'
+  end
 end

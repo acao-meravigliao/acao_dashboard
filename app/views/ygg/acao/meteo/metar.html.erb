@@ -26,11 +26,9 @@
       </div>
     </div>
 
-    <%= javascript_include_tag @faye_source_uri if @faye_source_uri %>
-
     <script type="text/javascript">
       var app = {
-        faye_interface_uri: '<%= @faye_interface_uri %>',
+        ws_uri: '<%= @ws_uri %>',
       };
     </script>
 
