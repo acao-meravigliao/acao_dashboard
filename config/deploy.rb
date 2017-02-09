@@ -64,9 +64,9 @@ task :deploy => :environment do
     to :stage do
     end
 
-    to :launch do
-      queue! '/usr/local/bin/pumactl -S log/puma-production.state restart ; true'
-    end
+#    to :launch do
+#      queue! '/usr/local/bin/pumactl -S log/puma-production.state restart ; true'
+#    end
   end
 
   invoke :local_cleanup

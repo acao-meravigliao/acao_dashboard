@@ -9,7 +9,7 @@
 module Ygg
 module Acao
 
-class RadarController < ApplicationController
+class RadarController < ActionController::Base
 
   layout false
 

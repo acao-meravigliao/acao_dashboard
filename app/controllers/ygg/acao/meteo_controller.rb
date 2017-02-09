@@ -9,7 +9,7 @@
 module Ygg
 module Acao
 
-class MeteoController < ApplicationController
+class MeteoController < ActionController::Base
 
   layout false
 
