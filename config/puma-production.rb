@@ -6,3 +6,5 @@ preload_app!
 
 state_path 'log/puma-production.state'
 pidfile 'log/puma-production.pid'
+
+plugin :systemd

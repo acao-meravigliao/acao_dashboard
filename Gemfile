@@ -2,9 +2,10 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0.0'
 gem 'jquery-rails'
-gem 'sprockets-rails'#, '~> 3.1.1'
+gem 'sprockets-rails'
 
 gem 'puma'
+gem 'puma-plugin-systemd'
 
 gem 'pry'
 gem 'pry-rails'
@@ -37,3 +38,4 @@ gem 'acao_extgui', path: '../../acao_plugins/acao_extgui'
 #gem 'trk_extgui', path: '../../acao_plugins/trk_extgui'
 gem 'i18n_extgui', path: '../../yggdra/plugins/i18n_extgui'
 gem 'ml_extgui', path: '../../yggdra/plugins/ml_extgui'
+gem 'streaming_extgui', path: '../../yggdra/plugins/streaming_extgui'
