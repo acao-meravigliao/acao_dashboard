@@ -26,8 +26,6 @@ gem 'json_exceptions', path: '../../yggdra/plugins/json_exceptions'
 
 gem 'autosvg', path: '../../yggdra/plugins/autosvg'
 
-gem 'yggdra_plugins', path: '../../yggdra/plugins/yggdra_plugins'
-
 gem 'extjs', path: '../../yggdra/plugins/extjs'
 gem 'extgui', path: '../../yggdra/plugins/extgui'
 gem 'fullgui', path: '../../yggdra/plugins/fullgui'

@@ -81,4 +81,6 @@ Rails.application.configure do
   config.extgui.compiled_stage1 = 'acao_dashboard-stage1.js'
   config.extgui.compiled_stage2 = 'acao_dashboard-stage2.js'
   config.extgui.ws_uri = lambda { "wss://#{request.host}/ws" }
+
+  config.acao_extgui.radar_processed_traffic_exchange = 'ygg.glideradar.processed_traffic'
 end

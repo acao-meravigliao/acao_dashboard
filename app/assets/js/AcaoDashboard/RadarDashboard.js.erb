@@ -1,0 +1,177 @@
+/*
+ * Copyright (C) 2014-2017, Daniele Orlandi
+ *
+ * Author:: Daniele Orlandi <daniele@orlandi.com>
+ *
+ * License:: You can redistribute it and/or modify it under the terms of the LICENSE file.
+ *
+ */
+
+Ext.define('AcaoDashboard.RadarDashboard', {
+  extend: 'Ext.panel.Panel',
+  requires: [
+    'Extgui.Ygg.Acao.Radar',
+    'Extgui.Ygg.Acao.TimetableEntry.IndexPanel',
+  ],
+
+  border: false,
+  layout: 'border',
+  items: [
+   {
+    xtype: 'container',
+    region: 'east',
+    width: 500,
+    layout: {
+      type: 'vbox',
+      align: 'stretch',
+    },
+    items: [
+     {
+      xtype: 'acao_radar',
+      flex: 1,
+     },
+     {
+      xtype: 'panel',
+      flex: 1,
+      title: 'Log',
+      layout: 'fit',
+      collapsible: true,
+  //    collapsed: false,
+      items: {
+        xtype: 'textarea',
+        name: 'logarea',
+      },
+     },
+    ],
+   },
+   {
+    xtype: 'acao_timetable',
+    region: 'center',
+    collapsible: true,
+   },
+  ],
+
+  initComponent: function() {
+    var me = this;
+
+    me.callParent(arguments);
+
+    me.radar = me.down('acao_radar');
+
+    me.radar.setWebSocket(Extgui.app.ws);
+
+    me.logArea = me.down('[name=logarea]');
+    me.timeTable = me.down('acao_timetable');
+
+    Extgui.app.ws.subscribe(Extgui.app.acao.radar_processed_traffic_exchange, {
+      onMessage: me.onMessage,
+      scope: me,
+      success: function() {
+        console.log("SUBSCRIBE SUCCESS");
+      },
+      failure: function() {
+        console.log("SUBSCRIBE FAILURE");
+      }
+    });
+
+    me.timeTable.on('select', function(el, record) {
+
+console.log("PPPPPPPPPPPPPPPPP", record);
+
+      if (me.currentTrack) {
+        me.currentTrack.setMap(null);
+        me.currentTrack = null;
+      }
+
+      if (me.takeoffMarker) {
+        me.takeoffMarker.setMap(null);
+        me.takeoffMarker = null;
+      }
+
+      if (me.landingMarker) {
+        me.landingMarker.setMap(null);
+        me.landingMarker = null;
+      }
+
+      me.radar.drawTrack(record.get('aircraft_id'), record.get('takeoff_at'), record.get('landing_at'), function(track) {
+        if (me.currentTrack) {
+          me.currentTrack.setMap(null);
+          me.currentTrack = null;
+        }
+
+        me.currentTrack = track;
+      });
+
+      if (record.gettakeoff_location()) {
+        me.takeoffMarker = new google.maps.Marker({
+          position: new google.maps.LatLng(record.gettakeoff_location().get('lat'), record.gettakeoff_location().get('lng')),
+          title: 'Takeoff',
+          map: me.radar.map,
+          icon: {
+            url: '<%=asset_path('acao/radar/takeoff.png')%>',
+            anchor: new google.maps.Point(8, 8),
+          },
+        });
+      }
+
+      if (record.getlanding_location()) {
+        me.landingMarker = new google.maps.Marker({
+          position: new google.maps.LatLng(record.getlanding_location().get('lat'), record.getlanding_location().get('lng')),
+          title: 'Landing',
+          map: me.radar.map,
+          icon: {
+            url: '<%=asset_path('acao/radar/landing.png')%>',
+            anchor: new google.maps.Point(8, 8),
+          },
+        });
+      }
+    });
+
+  },
+
+  onMessage: function(message) {
+    var me = this;
+
+    if (message.headers.type != 'TRAFFICS_UPDATE') {
+      console.log("OTHER MSG=", message);
+
+      var newText = me.logArea.getValue() + Ext.Date.format(new Date(), 'H:m:s') + ' ' + (message.payload.text || message.headers.type) + "\n";
+      var hasToScroll = me.logArea.inputEl.dom.scrollTop + me.logArea.inputEl.dom.clientHeight == me.logArea.inputEl.dom.scrollHeight;
+
+      me.logArea.setValue(newText);
+
+      if (hasToScroll)
+        me.logArea.inputEl.dom.scrollTop = 100000;
+    }
+
+    switch(message.headers.type) {
+    case 'TOW_STARTED':
+    case 'TRAFFIC_NEW':
+    case 'TOW_ANOMALY':
+    case 'TOW_RELEASED':
+    case 'TRAFFIC_REMOVED':
+    case 'TRAFFIC_ALIVE':
+    case 'TRAFFIC_LOST':
+    case 'FLIGHT_CLOSED':
+      var record = me.timeTable.getStore().getById(message.payload.tte.id);
+
+      record.beginEdit();
+      Ext.Object.each(message.payload.tte, function(k,v) {
+        if (k != 'id')
+          record.set(k, v);
+      });
+      record.endEdit();
+    break;
+
+    // FIXME: Do not reload the whole table!
+    case 'TAKEOFF':
+    case 'LANDING':
+    case 'FLIGHT_NEW':
+      me.timeTable.reload();
+    break;
+    }
+
+  },
+
+});
+

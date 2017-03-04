@@ -62,6 +62,8 @@ Rails.application.configure do
   config.extgui.hel_host = 'http://[::1]:3330'
   config.extgui.ws_uri = lambda { "ws://#{request.host}:3330/ws" }
 
+  config.acao_extgui.radar_processed_traffic_exchange = 'ygg.glideradar.processed_traffic.linobis'
+
   require_relative '../../lib/proxy'
   config.middleware.use Rack::Proxy do |req|
     if req.path =~ %r{^/ygg/(.*)}

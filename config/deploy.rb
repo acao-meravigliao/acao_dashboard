@@ -1,41 +1,30 @@
-require 'mina/bundler'
 require 'mina/rails'
-require 'mina/simple'
 
-# require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
-# require 'mina/rvm'    # for rvm support. (http://rvm.io)
-
-# Basic settings:
-#   domain       - The hostname to SSH to.
-#   deploy_to    - Path to deploy into.
-#   repository   - Git repo to clone from. (needed by mina/git)
-#   branch       - Branch name to deploy. (needed by mina/git)
-
-set :user, 'yggdra'
+set :application_name, 'acao_dashboard_frontend'
 set :domain, 'lino.acao.it'
 set :deploy_to, '/opt/acao_dashboard/frontend'
-
-set :shared_paths, [ 'log', ]
-set :exclude, [ '.git', 'tmp/*', ]
-set :bundle_options, lambda { %{--without "development test assets" --path "#{bundle_path}" --deployment} }
+set :shared_dirs, fetch(:shared_dirs, []) + [ ]
+set :shared_files, fetch(:shared_files, []) + [ 'config/database.yml', 'config/secrets.yml', ]
+set :repository, 'foobar'
+set :keep_releases, 20
+set :rsync_exclude, [
+  '.git*',
+  '/config/database.yml',
+  '/config/secrets.yml',
+  '/vendor/bundle',
+  '/tmp/cache',
+  '/log',
+].map { |x| "--exclude \"#{x}\"" }.join(' ')
 
 task :environment do
-  # For those using RVM, use this to load an RVM version@gemset.
-  # invoke :'rvm:use[ruby-1.9.3-p125@default]'
 end
 
-task :setup => :environment do
-  queue! %[mkdir -p "#{deploy_to}/shared/log"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
-
-  queue! %[mkdir -p "#{deploy_to}/shared/config"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
+task :setup do
 end
 
-task :bundler_workaround do
-  queue 'echo -----> Applying workaround to bundler bug'
-  queue! %[ sed -i 's/\\.\\.\\/\\.\\.\\/yggdra\\/plugins\\//vendor\\/cache\\//g' Gemfile ]
-  queue! %[ sed -i 's/\\.\\.\\/\\.\\.\\/acao_plugins\\//vendor\\/cache\\//g' Gemfile ]
+task :restart do
+  comment 'Restarting server'
+  command "/usr/local/bin/pumactl -F #{fetch(:deploy_to)}/current/config/puma-production.rb -S #{fetch(:deploy_to)}/current/log/puma-production.state restart ; true"
 end
 
 desc 'Does local cleanup'
@@ -44,40 +33,37 @@ task :local_cleanup do
   sh 'bundle install --without ""'
 end
 
-desc 'Deploys the current version to the server.'
-task :deploy => :environment do
-#    sh 'rake tmp:cache:clear'
-#    invoke :extgui_assets
-
-  sh 'bundle install --without "development test"'
-  sh 'RAILS_ENV=assets rake assets:precompile'
-  sh 'bundle install --without "development test assets"'
-  sh 'bundle package --all'
-  sh 'bundle package --all' # Do it twice otherwise Gemfile.lock keeps listing ../../plugins/... bundler bug?
-
+desc "Deploys the current version to the server."
+task :deploy do
   deploy do
-    invoke :'simple:upload_project'
+    sh 'bundle install --quiet --with "assets"'
+    sh 'RAILS_ENV=assets bundle exec rake assets:precompile'
+    sh 'bundle install --quiet --without "development test assets"'
+    sh 'bundle package --all'
+
+    sh "rsync --recursive --delete --delete-excluded #{fetch(:rsync_excludes)} . #{fetch(:domain)}:#{fetch(:deploy_to)}/upload"
+
+    comment 'Copying upload to build path.'
+    command "cp -r #{fetch(:deploy_to)}/upload/public/assets/{.??,}* #{fetch(:deploy_to)}/shared/public/assets/"
+    command "cp -r #{fetch(:deploy_to)}/upload/{.??,}* ."
+
     invoke :'deploy:link_shared_paths'
-    invoke :'bundler_workaround'
     invoke :'bundle:install'
+    invoke :'deploy:cleanup'
+    invoke :local_cleanup
 
-    to :stage do
+    on :launch do
+      invoke :restart
     end
-
-#    to :launch do
-#      queue! '/usr/local/bin/pumactl -S log/puma-production.state restart ; true'
-#    end
   end
-
-  invoke :local_cleanup
 end
 
 desc 'Put the server in maintenance mode'
 task :down do
-  queue! 'touch tmp/maintenance'
+  command 'touch tmp/maintenance'
 end
 
 desc 'Put the server in production from maintenance'
 task :up do
-  queue! 'rm tmp/maintenance'
+  command 'rm tmp/maintenance'
 end
