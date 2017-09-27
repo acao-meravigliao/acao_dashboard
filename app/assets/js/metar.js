@@ -42,7 +42,10 @@ Ext.define('Extgui.Ygg.Acao.Metar', {
   onOnline: function() {
     var me = this;
 
-    me.ws.subscribe('ygg.meteo.updates', {}, me.onMessage, me);
+    me.ws.subscribe('ygg.meteo.updates', {
+      onMessage: me.onMessage,
+      scope: me,
+    });
   },
 
 
@@ -55,7 +58,7 @@ Ext.define('Extgui.Ygg.Acao.Metar', {
     case 'WX_UPDATE':
       var u = {};
 
-      jQuery.each(message.payload.data, function(k,v) {
+      Ext.Object.each(message.payload.data, function(k,v) {
         k = message.payload.station_id + '_' + k;
 
         me.meteo[k] = v;
@@ -73,7 +76,7 @@ Ext.define('Extgui.Ygg.Acao.Metar', {
 
     u = u || {};
 
-    jQuery.each(me.meteo_upd, function(k,v) {
+    Ext.Object.each(me.meteo_upd, function(k,v) {
       if (v < (Date.now() - 15000) && m[k]) {
         u[k] = true;
         m[k] = null;

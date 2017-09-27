@@ -9,34 +9,44 @@
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas {
-        height: 100%;
-        width: 100%;
-      }
-
-      #map-canvas .label {
-        color: black;
-        background-color: white;
-        opacity: .5;
-      }
-
-      #cam {
-        width: 100%;
-        height: 100%;
-        background-color: grey;
-      }
     </style>
+    <%= stylesheet_link_tag 'radar' %>
+    <%= stylesheet_link_tag 'ext/resources/ext-theme-neptune/ext-theme-neptune-all.css' %>
   </head>
   <body>
-    <div id="map-canvas"></div>
+
+    <% if @config.compiled %>
+      <%= javascript_include_tag 'radar-all.js' %>
+    <% else %>
+      <%= javascript_include_tag @config.ext_core_js %>
+      <%= javascript_include_tag 'ext_core_patches.js' %>
+      <%= javascript_include_tag 'ext_patches.js' %>
+
+      <script type="text/javascript">
+        //<![CDATA[
+        Ext.Loader.setConfig({
+          enabled: true,
+          disableCaching: false, // Sprockets takes care of serving uncacheable assets
+          paths: <%=raw Hash[@config.routes.map { |k,v| [ k, "#{Rails.application.config.assets.prefix}/#{v}" ] }].to_json %>,
+        });
+        //]]>
+      </script>
+
+      <%= javascript_include_tag 'radar.js' %>
+    <% end %>
+
 
     <script type="text/javascript">
+      //<![CDATA[
+
       var app = {
         ws_uri: '<%= @ws_uri %>',
+        language: 'it',
+        google_maps_api_key: '<%= Rails.application.secrets.extgui_google_maps_api_key %>',
+        radar_processed_traffic_exchange: '<%= Rails.application.config.acao_extgui.radar_processed_traffic_exchange %>',
       };
-    </script>
 
-    <script type="text/javascript" src="<%= request.protocol %>maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <%= javascript_include_tag 'radar.js' %>
+      //]]>
+    </script>
   </body>
 </html>

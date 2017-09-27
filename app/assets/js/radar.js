@@ -1,16 +1,43 @@
-//= require markerwithlabel
-//= require ext/ext
-//= require ext_core_patches
-//= require Extgui/WebSocket
-//= require ext/src/data/flash/BinaryXhr
-//= require ext/src/data/Connection
-//= require Extgui/data/Connection
-//= require Extgui/AjaxJson
-//= require Extgui/Ygg/Acao/Radar
 
-var ws = new Extgui.WebSocket(app.ws_uri);
-ws.connect();
+Ext.Loader.setConfig({
+  enabled: true,
+  disableCaching: false, // Sprockets takes care of serving uncacheable assets
+  paths: {
+    "Extgui":"/assets-dev/Extgui",
+    "Ygg":"/assets-dev/Ygg",
+  },
+});
 
-google.maps.event.addDomListener(window, 'load', function() {
-  var radar = new Extgui.Ygg.Acao.Radar({ ws: ws });
+Ext.define('Radar.Viewport', {
+  extend: 'Ext.container.Viewport',
+  requires: [
+    'Extgui.WebSocket',
+    'Extgui.Ygg.Acao.Radar',
+  ],
+
+  id: 'radar-viewport',
+
+  layout: 'fit',
+  items: {
+    xtype: 'acao_radar',
+  },
+
+  initComponent: function() {
+    var me = this;
+
+    me.items.processedTrafficExchange = app.radar_processed_traffic_exchange;
+    Extgui.gmaps.Loader.language = app.language;
+    Extgui.gmaps.Loader.apiKey = app.google_maps_api_key;
+
+    me.ws = new Extgui.WebSocket(app.ws_uri);
+    me.ws.connect();
+
+    me.callParent(arguments);
+
+    me.down('acao_radar').setWebSocket(me.ws);
+  },
+});
+
+Ext.onReady(function() {
+  Ext.create('Radar.Viewport');
 });

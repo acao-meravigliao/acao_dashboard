@@ -29,6 +29,8 @@ class RadarController < ActionController::Base
   def common_stuff
     iu = Rails.application.config.extgui.ws_uri
     @ws_uri = iu.kind_of?(Proc) ? instance_exec(&iu) : iu
+
+    @config = Rails.application.config.extgui
   end
 
 end

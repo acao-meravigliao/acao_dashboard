@@ -9,7 +9,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <%= favicon_link_tag Rails.application.config.extgui.favicon %>
     <style type="text/css">
-      html { height: 100% }
+      html { height: 100%; background-color: white; }
       body { height: 100%; margin: 0; padding: 0 }
       div.data span { font-size: 130%; font-weight: bold }
     </style>
@@ -25,13 +25,13 @@
         <legend>2-minutes averaged wind</legend>
         <div>Speed: <span id="wind_2m_avg"></span> kt</div>
         <div>Vector: <span id="wind_2m_vec_mag"></span> kt from <span id="wind_2m_vec_dir"></span>°</div>
-        <div>Gust: <span id="wind_2m_gst"></span> kt from <span id="wind_2m_gst_dir"></span>° at <span id="wind_2m_gst_ts"></span></div>
+        <div>Gust: <span id="wind_2m_gst"></span> kt from <span id="wind_2m_gst_dir"></span>° <span id="wind_2m_gst_ts"></span></div>
       </fieldset>
       <fieldset style="display: inline">
         <legend>10-minutes averaged wind</legend>
         <div>Speed: <span id="wind_10m_avg"></span> kt</div>
         <div>Vector: <span id="wind_10m_vec_mag"></span> kt from <span id="wind_10m_vec_dir"></span>°</div>
-        <div>Gust: <span id="wind_10m_gst"></span> kt from <span id="wind_10m_gst_dir"></span>° at <span id="wind_10m_gst_ts"></span></div>
+        <div>Gust: <span id="wind_10m_gst"></span> kt from <span id="wind_10m_gst_dir"></span>° <span id="wind_10m_gst_ts"></span></div>
       </fieldset>
       <fieldset style="display: inline">
         <legend>Pressure</legend>
@@ -40,7 +40,6 @@
       </fieldset>
       <fieldset style="display: inline">
         <legend>Temperatures</legend>
-        <div>Wind Temperature: <span id="wind_temperature"></span> °C</div>
         <div>Temperature: <span id="temperature"></span> °C</div>
         <div>Rel. Humidity <span id="humidity"></span>%</div>
         <div>Dew Point <span id="dewpoint"></span> °C</div>
@@ -733,6 +732,7 @@
   </g>
 </svg>
 
+
     <script type="text/javascript">
       var app = {
         ws_uri: '<%= @ws_uri %>',
@@ -740,6 +740,5 @@
     </script>
 
     <%= javascript_include_tag 'meteo.js' %>
-
   </body>
 </html>

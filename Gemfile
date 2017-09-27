@@ -1,15 +1,20 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.1.0'
 gem 'jquery-rails'
 gem 'sprockets-rails'
 
 gem 'puma'
-gem 'puma-plugin-systemd'
+
+source 'https://gems.sevio.it/' do
+  gem 'puma-plugin-systemd'
+end
 
 gem 'pry'
 gem 'pry-rails'
 gem 'awesome_print'
+
+gem 'airbrake'
 
 group :assets do
   gem 'sass-rails', '~> 5.0'

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root :to => 'ygg/acao/dashboard/main#index'
+  root :to => redirect('index.html')
 
   get 'dashboard' => 'dashboard/main#index'
 

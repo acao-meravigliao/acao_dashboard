@@ -25,8 +25,9 @@ Rails.application.configure do
     'ext/resources/ext-theme-access/ext-theme-access-all.css',
     'ext/resources/ext-theme-neptune/ext-theme-neptune-all.css',
     'ext/resources/ext-theme-redtune/ext-theme-redtune-all.css',
-    'radar.js',
     'meteo.js',
     'metar.js',
+    'radar.css',
+    'radar-all.js',
   ]
 end
