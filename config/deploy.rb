@@ -1,15 +1,14 @@
 require 'mina/rails'
 
-set :application_name, 'acao_dashboard_frontend'
+set :application_name, 'acao-dashboard'
 set :domain, 'lino.acao.it'
-set :deploy_to, '/opt/acao_dashboard/frontend'
+set :deploy_to, '/opt/acao-dashboard'
 set :shared_dirs, fetch(:shared_dirs, []) + [ ]
-set :shared_files, fetch(:shared_files, []) + [ 'config/database.yml', 'config/secrets.yml', ]
+set :shared_files, fetch(:shared_files, []) + [ 'config/secrets.yml', ]
 set :repository, 'foobar'
 set :keep_releases, 20
 set :rsync_excludes, [
   '.git*',
-  '/config/database.yml',
   '/config/secrets.yml',
   '/vendor/bundle',
   '/tmp/cache',

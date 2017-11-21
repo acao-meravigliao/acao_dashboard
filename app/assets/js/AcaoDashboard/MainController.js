@@ -10,5 +10,6 @@
 Ext.define('AcaoDashboard.MainController', {
   extend: 'Extgui.fullgui.Controller',
   requires: [
+    //'Ext.data.association.BelongsTo',
   ],
 });
