@@ -1,7 +1,8 @@
 require 'mina/rails'
 
 set :application_name, 'acao-dashboard'
-set :domain, 'lino.acao.it'
+set :domain, 'linobis.acao.it'
+set :production_domain, 'lino.acao.it'
 set :deploy_to, '/opt/acao-dashboard'
 set :shared_dirs, fetch(:shared_dirs, []) + [ ]
 set :shared_files, fetch(:shared_files, []) + [ 'config/secrets.yml', ]
@@ -30,6 +31,10 @@ desc 'Does local cleanup'
 task :local_cleanup do
   sh 'rm -r vendor/cache'
   sh 'bundle install --without ""'
+end
+
+task :production do
+  set :domain, fetch(:production_domain)
 end
 
 desc "Deploys the current version to the server."
