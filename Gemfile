@@ -6,10 +6,6 @@ gem 'sprockets-rails'
 
 gem 'puma'
 
-source 'https://gems.sevio.it/' do
-  gem 'puma-plugin-systemd'
-end
-
 gem 'pry'
 gem 'pry-rails'
 gem 'awesome_print'
@@ -17,6 +13,11 @@ gem 'awesome_print'
 gem 'airbrake'
 
 gem 'bootsnap', '>= 1.1.0', require: false
+
+source 'https://gems.sevio.it/' do
+  gem 'puma-plugin-systemd'
+  gem 'json_exceptions'
+end
 
 group :assets do
   gem 'sass-rails', '~> 5.0'
@@ -28,8 +29,6 @@ end
 source 'https://gems.sevio.it' do
   gem 'am-http'
 end
-
-gem 'json_exceptions', path: '../yggdra/plugins/json_exceptions'
 
 gem 'autosvg', path: '../yggdra/plugins/autosvg'
 
