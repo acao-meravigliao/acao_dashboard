@@ -43,7 +43,7 @@ task :deploy do
     sh 'bundle install --quiet --with "assets"'
     sh 'RAILS_ENV=assets bundle exec rake assets:precompile'
     sh 'bundle install --quiet --without "development test assets"'
-    sh 'bundle package --all'
+    sh 'bundle package'
 
     sh "rsync --recursive --delete --delete-excluded #{fetch(:rsync_excludes)} . #{fetch(:domain)}:#{fetch(:deploy_to)}/upload"
 
