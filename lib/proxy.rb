@@ -23,7 +23,7 @@ class Rack::Proxy
 
     return @app.call(env) unless uri = uri_for(req)
 
-    sub_request = Net::HTTP.const_get(method).new("#{uri.path}#{"?" if uri.query}#{uri.query}")
+    sub_request = Net::HTTP.const_get(method, false).new("#{uri.path}#{"?" if uri.query}#{uri.query}")
     if sub_request.request_body_permitted?
       if req.body && req.content_type
         sub_request.body = req.body.read
