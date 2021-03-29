@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'actionpack', '~> 6.0.0'
-gem 'actionview', '~> 6.0.0'
-gem 'activesupport', '~> 6.0.0'
-gem 'railties', '~> 6.0.0'
+gem 'actionpack', '~> 6.0'
+gem 'actionview', '~> 6.0'
+gem 'activesupport', '~> 6.0'
+gem 'railties', '~> 6.0'
 
 gem 'jquery-rails'
 gem 'sprockets-rails'
