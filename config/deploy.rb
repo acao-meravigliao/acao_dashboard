@@ -21,7 +21,7 @@ end
 
 task :restart do
   comment 'Restarting server'
-  command "kill -TERM `cat #{fetch(:deploy_to)}/shared/log/puma-production.pid` ; true"
+  command "kill -TERM `cat #{fetch(:deploy_to)}/shared/log/puma-#{fetch(:environment)}.pid` ; true"
 end
 
 desc 'Does local cleanup'
