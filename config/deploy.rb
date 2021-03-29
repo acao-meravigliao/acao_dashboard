@@ -1,9 +1,6 @@
 require 'mina/rails'
 
 set :application_name, 'acao-dashboard'
-set :domain, 'linobis.acao.it'
-set :production_domain, 'lino.acao.it'
-set :deploy_to, '/opt/acao-dashboard'
 set :shared_dirs, fetch(:shared_dirs, []) + [ ]
 set :shared_files, fetch(:shared_files, []) + [ 'config/secrets.yml', ]
 set :repository, 'foobar'
@@ -34,8 +31,18 @@ task :local_cleanup do
   sh 'bundle config --local without ""'
 end
 
+task :staging do
+  set :domain, 'linobis.acao.it'
+  set :deploy_to, '/opt/acao-dashboard'
+end
+
 task :production do
-  set :domain, fetch(:production_domain)
+  if `git branch --show-current`.chomp != 'production'
+    abort 'Production deployment is supposed to be done from production branch'
+  end
+
+  set :domain, 'lino.acao.it'
+  set :deploy_to, '/opt/acao-dashboard'
 end
 
 desc "Deploys the current version to the server."
@@ -45,7 +52,7 @@ task :deploy do
     sh 'bundle config --local without "production test"'
     sh 'bundle install --quiet'
     sh 'RAILS_ENV=assets bundle exec rake assets:precompile'
-    sh 'RAILS_ENV=assets rake assets:clean[5]'
+    sh 'RAILS_ENV=assets bundle exec rake assets:clean[5]'
     sh 'bundle config --local with ""'
     sh 'bundle config --local without "development test assets"'
     sh 'bundle install --quiet'

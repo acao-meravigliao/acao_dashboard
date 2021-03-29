@@ -55,7 +55,7 @@ Rails.application.configure do
 
   config.extgui.ext_core_js = 'ext/ext-dev.js'
   config.extgui.hel_host = 'http://[::1]:3330'
-  config.extgui.ws_uri = lambda { "ws://#{request.host}:3330/ws" }
+  config.extgui.ws_uri = lambda { "ws://#{request.host}:3330/vos" }
 
   config.acao_extgui.radar_processed_traffic_exchange = 'ygg.glideradar.processed_traffic.linobis'
 
@@ -65,4 +65,6 @@ Rails.application.configure do
       URI.parse("#{Rails.application.config.extgui.hel_host}/ygg/#{$1}?#{req.query_string}")
     end
   end
+
+  config.hosts.clear
 end
